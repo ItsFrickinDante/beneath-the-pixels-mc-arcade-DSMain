@@ -80,25 +80,6 @@ Girl = sprites.create(img`
     . . . . f f f f f f . . . . 
     . . . . . f f f . . . . . . 
     `, SpriteKind.Player)
-let Searcher = sprites.create(img`
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . f f f f f . . . . . . . . 
-    . . f 1 1 1 1 1 f . . . . . . . 
-    . f 1 1 1 1 1 1 1 f . . . . . . 
-    . f 1 f 1 1 f 1 1 f . . . . . . 
-    . f 1 f 1 1 f 1 1 f . . . . . . 
-    . f 1 1 1 1 1 1 1 f f . . . . . 
-    . f 1 1 1 1 1 1 1 f f . . . . . 
-    . . f 1 1 1 1 1 f f f f . . . . 
-    . . f f f f f f f f f f f . . . 
-    . . . f f f f f f f f f f . . . 
-    . . . . . . f f f f f f f . . . 
-    . . . . . . . . . f f f f f . . 
-    . . . . . . . . . . . f f f f . 
-    . . . . . . . . . . . . . . . . 
-    `, SpriteKind.Enemy)
-Searcher.setPosition(108, 75)
 scaling.scaleByPercent(Girl, -10, ScaleDirection.Uniformly, ScaleAnchor.Middle)
 scene.cameraFollowSprite(Girl)
 Power_up = sprites.create(img`
@@ -382,9 +363,6 @@ game.onUpdate(function () {
 })
 game.onUpdateInterval(2000, function () {
     info.changeScoreBy(1)
-})
-game.onUpdateInterval(1000, function () {
-    Searcher.setVelocity(randint(-70, 70), randint(-50, 50))
 })
 forever(function () {
     Power_up.setPosition(132, 99)
