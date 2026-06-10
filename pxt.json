@@ -5,7 +5,8 @@
         "device": "*",
         "pxt-lantern": "github:riknoll/pxt-lantern#v0.1.2",
         "darts": "*",
-        "sprite-scaling": "*"
+        "sprite-scaling": "*",
+        "sprite-fx": "github:kohanmathers/makecodespritefx#v1.3.0"
     },
     "files": [
         "main.blocks",

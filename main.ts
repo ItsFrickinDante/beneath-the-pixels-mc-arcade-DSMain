@@ -18,7 +18,7 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile2`, function (sprite, l
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Food, function (sprite, otherSprite) {
     sprites.destroy(Power_up)
-    mySprite.setPosition(42, 200)
+    Girl.setPosition(42, 200)
 })
 function Level_three () {
     tiles.setCurrentTilemap(tilemap`level3`)
@@ -43,7 +43,7 @@ function Level_three () {
 }
 function UnderDepthsStart () {
     tiles.setCurrentTilemap(tilemap`level2`)
-    mySprite.setPosition(57, 61)
+    Girl.setPosition(57, 61)
 }
 function BacktoTheTop () {
     tiles.setCurrentTilemap(tilemap`level1`)
@@ -61,8 +61,8 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSp
 })
 let NPC: Sprite = null
 let Power_up: Sprite = null
-let mySprite: Sprite = null
-mySprite = sprites.create(img`
+let Girl: Sprite = null
+Girl = sprites.create(img`
     . f f f . f f f f f . . . . 
     f f 3 f f 3 3 3 3 f f . . . 
     f 3 3 1 c 3 3 3 3 3 3 f . . 
@@ -80,8 +80,27 @@ mySprite = sprites.create(img`
     . . . . f f f f f f . . . . 
     . . . . . f f f . . . . . . 
     `, SpriteKind.Player)
-scaling.scaleByPercent(mySprite, -10, ScaleDirection.Uniformly, ScaleAnchor.Middle)
-scene.cameraFollowSprite(mySprite)
+let Searcher = sprites.create(img`
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . f f f f f . . . . . . . . 
+    . . f 1 1 1 1 1 f . . . . . . . 
+    . f 1 1 1 1 1 1 1 f . . . . . . 
+    . f 1 f 1 1 f 1 1 f . . . . . . 
+    . f 1 f 1 1 f 1 1 f . . . . . . 
+    . f 1 1 1 1 1 1 1 f f . . . . . 
+    . f 1 1 1 1 1 1 1 f f . . . . . 
+    . . f 1 1 1 1 1 f f f f . . . . 
+    . . f f f f f f f f f f f . . . 
+    . . . f f f f f f f f f f . . . 
+    . . . . . . f f f f f f f . . . 
+    . . . . . . . . . f f f f f . . 
+    . . . . . . . . . . . f f f f . 
+    . . . . . . . . . . . . . . . . 
+    `, SpriteKind.Enemy)
+Searcher.setPosition(108, 75)
+scaling.scaleByPercent(Girl, -10, ScaleDirection.Uniformly, ScaleAnchor.Middle)
+scene.cameraFollowSprite(Girl)
 Power_up = sprites.create(img`
     . . . . . . . . . . . . . . . . 
     . . . . . . . . . . . . . . . . 
@@ -100,7 +119,7 @@ Power_up = sprites.create(img`
     . . . . . . . . . . . . . . . . 
     . . . . . . . . . . . . . . . . 
     `, SpriteKind.Food)
-let myEnemy = sprites.create(img`
+let Glitch = sprites.create(img`
     . . . . . f 7 7 7 f f 2 2 . . . 
     . . . f f f f f f f 1 1 f 9 9 . 
     . b b f 1 1 f f f f 1 1 f f f . 
@@ -118,16 +137,254 @@ let myEnemy = sprites.create(img`
     . . . . . . . . . . . . . . . . 
     . . . . . . . . . . . . . . . . 
     `, SpriteKind.Enemy)
-scaling.scaleByPercent(myEnemy, 29, ScaleDirection.Uniformly, ScaleAnchor.Middle)
-myEnemy.startEffect(effects.smiles, 1e+47)
-myEnemy.startEffect(effects.trail, 1e+47)
+scaling.scaleByPercent(Glitch, 29, ScaleDirection.Uniformly, ScaleAnchor.Middle)
+Glitch.startEffect(effects.smiles, 1e+47)
+Glitch.startEffect(effects.trail, 1e+47)
 tiles.setCurrentTilemap(tilemap`level1`)
-controller.moveSprite(mySprite)
-myEnemy.follow(mySprite, 80)
-myEnemy.setPosition(81, 105)
+controller.moveSprite(Girl)
+Glitch.follow(Girl, 80)
+Glitch.setPosition(81, 105)
 info.setScore(0)
+game.onUpdate(function () {
+    if (Girl.vx > 1) {
+        animation.runImageAnimation(
+        Girl,
+        [img`
+            . . . . . . . . . . . . . . 
+            . f f f . f f f f f . . . . 
+            f f f f f c c c c f f . . . 
+            f f f f b c c c c c c f . . 
+            f f f c 3 c c c c c c f . . 
+            . f 3 3 c c c c c c c c f . 
+            . f f f c c c c c 4 c c f . 
+            . f f f f c c c 4 4 c f f . 
+            . f f 4 4 f b f 4 4 f f f . 
+            . f f 4 d 4 1 f d d c f . . 
+            . . f f f 4 d d d d f . . . 
+            . . 4 d d e 4 4 4 e f . . . 
+            . . e d d e 3 3 3 3 f . . . 
+            . . f e e f 6 6 6 6 f f . . 
+            . . f f f f f f f f f f . . 
+            . . . f f . . . f f f . . . 
+            `,img`
+            . . . . . . . . . . . . . . 
+            . f f f . f f f f f . . . . 
+            f f f f f c c c c f f . . . 
+            f f f f b c c c c c c f . . 
+            f f f c 3 c c c c c c f . . 
+            . f 3 3 c c c c c c c c f . 
+            . f f f c c c c c 4 c c f . 
+            . f f f f c c c 4 4 c f f . 
+            . f f 4 4 f b f 4 4 f f f . 
+            . . f 4 d 4 1 f d d f f . . 
+            . . f f f e e d d d f . . . 
+            . . . f 4 d d e 4 e f . . . 
+            . . . f e d d e 3 3 f . . . 
+            . . f f f e e f 6 6 f f . . 
+            . . f f f f f f f f f f . . 
+            . . . f f . . . f f f . . . 
+            `,img`
+            . f f f . f f f f f . . . . 
+            f f f f f c c c c f f . . . 
+            f f f f b c c c c c c f . . 
+            f f f c 3 c c c c c c f . . 
+            . f 3 3 c c c c c c c c f . 
+            . f f f c c c c c 4 c c f . 
+            . f f f f c c c 4 4 e f f . 
+            . f f 4 4 f b f 4 4 e f f . 
+            . . f 4 d 4 1 f d d f f . . 
+            . . f f f 4 d d d d f . . . 
+            . . . f e e 4 4 4 e f . . . 
+            . . . 4 d d e 3 3 3 f . . . 
+            . . . e d d e 3 3 3 f . . . 
+            . . . f e e f 6 6 6 f . . . 
+            . . . . f f f f f f . . . . 
+            . . . . . f f f . . . . . . 
+            `],
+        500,
+        true
+        )
+    } else if (Girl.vx < -1) {
+        animation.runImageAnimation(
+        Girl,
+        [img`
+            . . . . . . . . . . . . . . 
+            . . . . f f f f f . f f f . 
+            . . . f f c c c c f f f f f 
+            . . f c c c c c c b f f f f 
+            . . f c c c c c c 3 c f f f 
+            . f c c c c c c c c 3 3 f . 
+            . f c c 4 c c c c c f f f . 
+            . f f c 4 4 c c c f f f f . 
+            . f f f 4 4 f b f 4 3 f f . 
+            . . f c d d f 1 4 d 4 f f . 
+            . . . f d d d d 4 f f f . . 
+            . . . f e 4 4 4 e d d 4 . . 
+            . . . f 3 3 3 3 e d d e . . 
+            . . f f 6 6 6 6 f e e f . . 
+            . . f f f f f f f f f f . . 
+            . . . f f f . . . f f . . . 
+            `,img`
+            . . . . . . . . . . . . . . 
+            . . . . f f f f f . f f f . 
+            . . . f f c c c c f f f f f 
+            . . f c c c c c c b f f f f 
+            . . f c c c c c c 3 c f f f 
+            . f c c c c c c c c 3 3 f . 
+            . f c c 4 c c c c c f f f . 
+            . f f c 4 4 c c c f f f f . 
+            . f f f 4 4 f b f 4 4 f f . 
+            . . f f d d f 1 4 d 4 f . . 
+            . . . f d d d e e f f f . . 
+            . . . f e 4 e d d 4 f . . . 
+            . . . f 3 3 e d d e f . . . 
+            . . f f 6 6 f e e f f f . . 
+            . . f f f f f f f f f f . . 
+            . . . f f f . . . f f . . . 
+            `,img`
+            . . . . f f f f f . f f f . 
+            . . . f f c c c c f f f f f 
+            . . f c c c c c c b f f f f 
+            . . f c c c c c c 3 c f f f 
+            . f c c c c c c c c 3 3 f . 
+            . f c c 4 c c c c c f f f . 
+            . f f e 4 4 c c c f f f f . 
+            . f f e 4 4 f b f 4 4 f f . 
+            . . f f d d f 1 4 d 4 f . . 
+            . . . f d d d d 4 f f f . . 
+            . . . f e 4 4 4 e e f . . . 
+            . . . f 3 3 3 e d d 4 . . . 
+            . . . f 3 3 3 e d d e . . . 
+            . . . f 6 6 6 f e e f . . . 
+            . . . . f f f f f f . . . . 
+            . . . . . . f f f . . . . . 
+            `],
+        500,
+        true
+        )
+    } else if (Girl.vy < 1) {
+        animation.runImageAnimation(
+        Girl,
+        [img`
+            . f f f . f f f f . f f f . 
+            f f f f f c c c c f f f f f 
+            f f f f b c c c c b f f f f 
+            f f f c 3 c c c c 3 c f f f 
+            . f 3 3 c c c c c c 3 3 f . 
+            . f c c c c c c c c c c f . 
+            . f f c c c c c c c c f f . 
+            . f f f c c c c c c f f f . 
+            . f f f f f f f f f f f f . 
+            . . f f f f f f f f f f . . 
+            . . e f f f f f f f f e . . 
+            . e 4 f f f f f f f f 4 e . 
+            . 4 d f 3 3 3 3 3 3 c d 4 . 
+            . 4 4 f 6 6 6 6 6 6 f 4 4 . 
+            . . . . f f f f f f . . . . 
+            . . . . f f . . f f . . . . 
+            `,img`
+            . . . . . . . . . . . . . . 
+            . f f f . f f f f f . . . . 
+            f f f f f c c c c f f . . . 
+            f f f f b c c c c c c f . . 
+            f f f c 3 c c c c c c f . . 
+            . f 3 3 c c c c c c c c f . 
+            . f f f c c c c c 4 c c f . 
+            . f f f f c c c 4 4 c f f . 
+            . f f 4 4 f b f 4 4 f f f . 
+            . . f 4 d 4 1 f d d f f . . 
+            . . f f f e e d d d f . . . 
+            . . . f 4 d d e 4 e f . . . 
+            . . . f e d d e 3 3 f . . . 
+            . . f f f e e f 6 6 f f . . 
+            . . f f f f f f f f f f . . 
+            . . . f f . . . f f f . . . 
+            `,img`
+            . f f f . f f f f f . . . . 
+            f f f f f c c c c f f . . . 
+            f f f f b c c c c c c f . . 
+            f f f c 3 c c c c c c f . . 
+            . f 3 3 c c c c c c c c f . 
+            . f f f c c c c c 4 c c f . 
+            . f f f f c c c 4 4 e f f . 
+            . f f 4 4 f b f 4 4 e f f . 
+            . . f 4 d 4 1 f d d f f . . 
+            . . f f f 4 d d d d f . . . 
+            . . . f e e 4 4 4 e f . . . 
+            . . . 4 d d e 3 3 3 f . . . 
+            . . . e d d e 3 3 3 f . . . 
+            . . . f e e f 6 6 6 f . . . 
+            . . . . f f f f f f . . . . 
+            . . . . . f f f . . . . . . 
+            `],
+        500,
+        true
+        )
+    } else if (Girl.vy > -1) {
+        animation.runImageAnimation(
+        Girl,
+        [img`
+            . f f f . f f f f . f f f . 
+            f f f f f c c c c f f f f f 
+            f f f f b c c c c b f f f f 
+            f f f c 3 c c c c 3 c f f f 
+            . f 3 3 c c c c c c 3 3 f . 
+            . f c c c c 4 4 c c c c f . 
+            . f f c c 4 4 4 4 c c f f . 
+            . f f f b f 4 4 f b f f f . 
+            . f f 4 1 f d d f 1 4 f f . 
+            . . f f d d d d d d f f . . 
+            . . e f e 4 4 4 4 e f e . . 
+            . e 4 f b 3 3 3 3 b f 4 e . 
+            . 4 d f 3 3 3 3 3 3 c d 4 . 
+            . 4 4 f 6 6 6 6 6 6 f 4 4 . 
+            . . . . f f f f f f . . . . 
+            . . . . f f . . f f . . . . 
+            `,img`
+            . . . . . . . . . . . . . . 
+            . . . . f f f f f . f f f . 
+            . . . f f c c c c f f f f f 
+            . . f c c c c c c b f f f f 
+            . . f c c c c c c 3 c f f f 
+            . f c c c c c c c c 3 3 f . 
+            . f c c 4 c c c c c f f f . 
+            . f f c 4 4 c c c f f f f . 
+            . f f f 4 4 f b f 4 4 f f . 
+            . . f f d d f 1 4 d 4 f . . 
+            . . . f d d d e e f f f . . 
+            . . . f e 4 e d d 4 f . . . 
+            . . . f 3 3 e d d e f . . . 
+            . . f f 6 6 f e e f f f . . 
+            . . f f f f f f f f f f . . 
+            . . . f f f . . . f f . . . 
+            `,img`
+            . . . . f f f f f . f f f . 
+            . . . f f c c c c f f f f f 
+            . . f c c c c c c b f f f f 
+            . . f c c c c c c 3 c f f f 
+            . f c c c c c c c c 3 3 f . 
+            . f c c 4 c c c c c f f f . 
+            . f f e 4 4 c c c f f f f . 
+            . f f e 4 4 f b f 4 4 f f . 
+            . . f f d d f 1 4 d 4 f . . 
+            . . . f d d d d 4 f f f . . 
+            . . . f e 4 4 4 e e f . . . 
+            . . . f 3 3 3 e d d 4 . . . 
+            . . . f 3 3 3 e d d e . . . 
+            . . . f 6 6 6 f e e f . . . 
+            . . . . f f f f f f . . . . 
+            . . . . . . f f f . . . . . 
+            `],
+        500,
+        true
+        )
+    }
+})
 game.onUpdateInterval(2000, function () {
     info.changeScoreBy(1)
+})
+game.onUpdateInterval(1000, function () {
+    Searcher.setVelocity(randint(-70, 70), randint(-50, 50))
 })
 forever(function () {
     Power_up.setPosition(132, 99)
