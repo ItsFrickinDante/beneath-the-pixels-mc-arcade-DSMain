@@ -1,9 +1,18 @@
+namespace SpriteKind {
+    export const NPC = SpriteKind.create()
+}
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile1`, function (sprite, location) {
     game.splash("You Found A Gold Key")
+})
+sprites.onOverlap(SpriteKind.Player, SpriteKind.NPC, function (sprite, otherSprite) {
+    NPC.sayText("Find a GOLD KEY and I'll show you the exit.", 1000, false)
 })
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile4`, function (sprite, location) {
     Level_three()
 })
+function Downstairs () {
+    tiles.setCurrentTilemap(tilemap`level4`)
+}
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile2`, function (sprite, location) {
     BacktoTheTop()
 })
@@ -13,6 +22,24 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Food, function (sprite, otherSpr
 })
 function Level_three () {
     tiles.setCurrentTilemap(tilemap`level3`)
+    NPC = sprites.create(img`
+        . . . . . . f f f f . . . . . . 
+        . . . . f f f 2 2 f f f . . . . 
+        . . . f f f 2 2 2 2 f f f . . . 
+        . . f f f e e e e e e f f f . . 
+        . . f f e 2 2 2 2 2 2 e e f . . 
+        . . f e 2 f f f f f f 2 e f . . 
+        . . f f f f e e e e f f f f . . 
+        . f f e f b f 4 4 f b f e f f . 
+        . f e e 4 1 f d d f 1 4 e e f . 
+        . . f f f f d d d d d e e f . . 
+        . f d d d d f 4 4 4 e e f . . . 
+        . f b b b b f 2 2 2 2 f 4 e . . 
+        . f b b b b f 2 2 2 2 f d 4 . . 
+        . . f c c f 4 5 5 4 4 f 4 4 . . 
+        . . . f f f f f f f f . . . . . 
+        . . . . . f f . . f f . . . . . 
+        `, SpriteKind.NPC)
 }
 function UnderDepthsStart () {
     tiles.setCurrentTilemap(tilemap`level2`)
@@ -21,6 +48,9 @@ function UnderDepthsStart () {
 function BacktoTheTop () {
     tiles.setCurrentTilemap(tilemap`level1`)
 }
+scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.stairLarge, function (sprite, location) {
+    Downstairs()
+})
 scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.doorOpenNorth, function (sprite, location) {
     UnderDepthsStart()
 })
@@ -29,6 +59,7 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSp
     game.gameOver(false)
     game.setGameOverScoringType(game.ScoringType.HighScore)
 })
+let NPC: Sprite = null
 let Power_up: Sprite = null
 let mySprite: Sprite = null
 mySprite = sprites.create(img`
@@ -95,7 +126,7 @@ controller.moveSprite(mySprite)
 myEnemy.follow(mySprite, 80)
 myEnemy.setPosition(81, 105)
 info.setScore(0)
-game.onUpdateInterval(5000, function () {
+game.onUpdateInterval(2000, function () {
     info.changeScoreBy(1)
 })
 forever(function () {
