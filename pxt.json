@@ -6,7 +6,8 @@
         "pxt-lantern": "github:riknoll/pxt-lantern#v0.1.2",
         "darts": "*",
         "sprite-scaling": "*",
-        "sprite-fx": "github:kohanmathers/makecodespritefx#v1.3.0"
+        "sprite-fx": "github:kohanmathers/makecodespritefx#v1.3.0",
+        "carnival": "github:microsoft/arcade-carnival#v0.0.7"
     },
     "files": [
         "main.blocks",
